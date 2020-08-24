@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/estilos.css' %}" TYPE="text/css">
+    <title>Sistema Facturacion</title>
+
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="{% url 'home' %}">HOME</a>
+          </li>
+          <li>
+            <a href="{% url 'clientes' %}">CLIENTES</a>
+          </li>
+          <li>
+            <a href="{% url 'nuevo_cliente' %}">Nuevo CLIENTE</a>
+          </li>
+          <li>
+            <a href="{% url 'planes' %}">PLANES</a>
+          </li>
+          <li>
+            <a href="{% url 'nuevo_planes' %}">Nuevo PLAN</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div id="principal">
+        <br>
+        {% block contenido %}
+
+
+        {% endblock %}
+
+    </div>
+    <div id="adicional">
+    <p>
+      Sistema de facturacion para empresas de internet
+    </p>
+
+    <p>Desarrollado por <span id="especial">XPCMAX</span> informatica</p>
+
+    <p> puede consultarnos <a href="#">link</a> para presupuestos</p>
+    </div>
+
+  </body>
+</html>

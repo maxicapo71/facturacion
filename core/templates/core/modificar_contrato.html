@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+
+<div class="content-wrapper">
+    <div class="row">       
+        <div class="row flex-grow">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-body">
+                        <h1 id="titulo">Modificar Contrato</h1>
+                        <p class="card-description">Complete los siguientes datos:</p>
+                        <form class="forms-sample" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="cliente">{{ form.cliente.label }}</label>
+                            {{ form.cliente }}
+                           
+                        </div>
+                        <div class="form-group row">
+                            <label for="plan">{{ form.plan.label }}</label>
+                            {{ form.plan }}
+                        </div>
+                        <div class="form-group row">
+                            <label for="ip">{{ form.ip.label }}</label>
+                            {{ form.ip }}
+                        </div>
+                        <div class="form-group row">
+                            <label for="detalle">{{ form.detalle.label }}</label>
+                            {{ form.detalle }}
+                        </div>
+                        <br>
+                        <button type="reset" class="btn btn-light btn-fw">
+                            <i class="mdi mdi-refresh"></i>Limpiar</button>
+                        <button type="submit" class="btn btn-success btn-fw">
+                            <i class="mdi mdi-check"></i>Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>    
+        </div>            
+    </div>     
+            
+</div>
+
+{{ mensaje }}
+
+{% endblock %}

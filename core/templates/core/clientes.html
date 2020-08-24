@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+
+<h1 id="titulo">CLIENTES</h1>
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Telefono</th>
+        <th>Dni</th>
+        <th>Direccion</th>
+        <th>Ciudad</th>
+        <th>Codigo Postal</th>
+        <th>Provincia</th>
+        <th>Opciones</th>
+    </tr>
+
+    {% for p in clientes %}
+
+    <tr>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.email }}</td>
+        <td>{{ p.telefono }}</td>
+        <td>{{ p.dni }}</td>
+        <td>{{ p.direccion }}</td>
+        <td>{{ p.ciudad }}</td>
+        <td>{{ p.codigo_postal }}</td>
+        <td>{{ p.provincia }}</td>
+        <td>
+            <a href="{% url 'modificar_cliente' p.id %}">Modificar</a>
+            <a href="#" onclick="confirmarEliminacion({{p.id}})">Eliminar</a>
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="{% static 'core/js/confirmacion.js' %}"></script>
+
+{% endblock %}

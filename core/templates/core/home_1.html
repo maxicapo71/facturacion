@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+    <h1 id="titulo">Sistema de Facturacion</h1>
+    <p>Este es un programa para administrar clientes, contratos, pagos y planes de una empresa de <strong>INTERNET</strong>en forma sencilla y agil. 
+    <span class="destacado">VERSION</span>VERSION</p>
+    <h2 id="subtitulo">NOMBRE DE LA EMPRESA</h2>
+    <p> <a href="#">LINK<em>2020</em>NADA</a>
+    <span class="especial">detalles</span></p>
+    <table summary="Descripción de la tabla y su contenido">
+    <caption>Título de la tabla</caption>
+    <thead>
+    <tr>
+    <th scope="col"></th>
+    <th scope="col" class="especial">Título columna 1</th>
+    <th scope="col" class="especial">Título columna 2</th>
+    </tr>
+    </thead>
+
+    <tfoot>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Título columna 1</th>
+        <th scope="col">Título columna 2</th>
+      </tr>
+    </tfoot>
+
+    <tbody>
+      <tr>
+        <th scope="row" class="especial">Título fila 1</th>
+        <td>datos</td>
+        <td>datos <em>datos</em></td>
+      </tr>
+      <tr>
+        <th scope="row">Título fila 2</th>
+        <td>datos <strong>datos</strong></td>
+        <td>datos</td>
+      </tr>
+    </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+
+
+{% block contenido %}
+
+
+<h1 id="titulo">PLANES</h1>
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Velocidad de subida Kb</th>
+        <th>Velocidad de bajada Kb</th>
+        <th>Precio</th>
+        <th>Detalle</th>
+        <th>Opciones</th>
+    </tr>
+
+    {% for p in planes %}
+
+    <tr>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.vel_subida }}</td>
+        <td>{{ p.vel_bajada }}</td>
+        <td>{{ p.precio }}</td>
+        <td>{{ p.detalle }}</td>
+        <td>
+            <a href="{% url 'modificar_planes' p.id %}">Modificar</a>
+            <a href="#" onclick="confirmarEliminacionPlanes({{p.id}})">Eliminar</a>
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="{% static 'core/js/confirmacion.js' %}"></script>
+
+{% endblock %}
