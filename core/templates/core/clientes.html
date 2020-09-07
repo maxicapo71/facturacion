@@ -6,22 +6,23 @@
 
 
 <h1 id="titulo">CLIENTES</h1>
-
-<table>
-    <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Telefono</th>
-        <th>Dni</th>
-        <th>Direccion</th>
-        <th>Ciudad</th>
-        <th>Codigo Postal</th>
-        <th>Provincia</th>
-        <th>Opciones</th>
-    </tr>
-
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Dni</th>
+            <th>Direccion</th>
+            <th>Ciudad</th>
+            <th>Codigo Postal</th>
+            <th>Provincia</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    
     {% for p in clientes %}
-
+    
     <tr>
         <td>{{ p.nombre }}</td>
         <td>{{ p.email }}</td>
@@ -32,12 +33,17 @@
         <td>{{ p.codigo_postal }}</td>
         <td>{{ p.provincia }}</td>
         <td>
-            <a href="{% url 'modificar_cliente' p.id %}">Modificar</a>
-            <a href="#" onclick="confirmarEliminacion({{p.id}})">Eliminar</a>
+            <a href="{% url 'modificar_cliente' p.id %}" class="btn btn-dark btn-fw">
+                <i class="mdi mdi-cloud-download"></i>Editar</a>
+            <button type="button" onclick="confirmarEliminacion({{p.id}})" class="btn btn-danger btn-fw">
+                    <i class="mdi mdi-alert-outline"></i>Eliminar</button>
+            
         </td>
     </tr>
 
+
     {% endfor %}
+    
 
 </table>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>

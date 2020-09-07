@@ -41,4 +41,15 @@ class Contrato(models.Model):
         return self.ip
 
 
+class Cupon(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    contrato = models.ForeignKey(Contrato, on_delete=models.PROTECT)
+    Monto = models.IntegerField()
+    detalle = models.TextField(max_length=160)
+    fecha_creacion = models.DateField(default=timezone.now)
+    pagado = models.BooleanField(False)
+    fecha_pago = models.DateField
+
+    def __str__(self):
+        return self.cliente
 

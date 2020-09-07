@@ -7,14 +7,16 @@
 
 <h1 id="titulo">CONTRATOS</h1>
 
-<table>
-    <tr>
-        <th>Cliente</th>
-        <th>Plan</th>
-        <th>Dirección IP</th>
-        <th>Detalle</th>
-        <th>Fecha Creación</th>
-    </tr>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Plan</th>
+            <th>Dirección IP</th>
+            <th>Detalle</th>
+            <th>Fecha Creación</th>
+        </tr>
+    </thead>
 
     {% for p in contratos %}
 
@@ -25,8 +27,11 @@
         <td>{{ p.detalle }}</td>
         <td>{{ p.fecha_creacion }}</td>
         <td>
-            <a href="{% url 'modificar_contrato' p.id %}">Modificar</a>
-            <a href="#" onclick="confirmarEliminacion({{p.id}})">Eliminar</a>
+            <a href="{% url 'modificar_contrato' p.id %}" class="btn btn-dark btn-fw">
+                <i class="mdi mdi-cloud-download"></i>Editar</a>
+            <button type="button" onclick="confirmarEliminacion({{p.id}})" class="btn btn-danger btn-fw">
+                    <i class="mdi mdi-alert-outline"></i>Eliminar</button>
+            
         </td>
     </tr>
 
