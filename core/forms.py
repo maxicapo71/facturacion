@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Cliente, Planes, Contrato
+from .models import Cliente, Planes, Contrato, Cupon
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class ClienteForm(ModelForm):
     
@@ -147,3 +149,37 @@ class ContratoForm(ModelForm):
                     'id': 'detalle'
                 })
          }
+
+class CuponesForm(ModelForm):
+    
+    class Meta:
+        model = Cupon
+        fields = ['cliente', 'contrato', 'monto', 'detalle']
+        widgets = {
+            'cliente' : forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'cliente'
+                }),
+            'contrato' : forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'contrato'
+                }),   
+            'monto' : forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'monto'
+                }), 
+            'detalle' : forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Detalle del Cupon',
+                    'id': 'detalle'
+                })
+         }
+
+class CustomUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']

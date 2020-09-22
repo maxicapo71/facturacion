@@ -6,5 +6,46 @@
 
 
 <h1 id="titulo">CUPONES</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Contrato</th>
+            <th>Monto</th>
+            <th>Detalle</th>
+            <th>Fecha de Creación</th>
+            <th>Estado</th>
+            <th>Fecha de Pago</th>
+            
+        </tr>
+    </thead>
+    
+    {% for p in cupones %}
+    
+    <tr>
+        <td>{{ p.cliente }}</td>
+        <td>{{ p.contrato }}</td>
+        <td>{{ p.monto }}</td>
+        <td>{{ p.detalle }}</td>
+        <td>{{ p.fecha_creacion }}</td>
+        <td>{{ p.pagado }}</td>
+        <td>{{ p.fecha_pago }}</td>
+    
+        <td>
+            <a href="{% url 'modificar_cupon' p.id %}" class="btn btn-dark btn-fw">
+                <i class="mdi mdi-cloud-download"></i>Editar</a>
+            <button type="button" onclick="confirmarEliminacion({{p.id}})" class="btn btn-danger btn-fw">
+                    <i class="mdi mdi-alert-outline"></i>Eliminar</button>
+            
+        </td>
+    </tr>
+
+
+    {% endfor %}
+    
+
+</table>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="{% static 'core/js/confirmacion.js' %}"></script>
 
 {% endblock %}

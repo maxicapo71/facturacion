@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -43,8 +44,8 @@ class Contrato(models.Model):
 
 class Cupon(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    contrato = models.ForeignKey(Contrato, on_delete=models.PROTECT)
-    Monto = models.IntegerField()
+    contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE)
+    monto = models.IntegerField()
     detalle = models.TextField(max_length=160)
     fecha_creacion = models.DateField(default=timezone.now)
     pagado = models.BooleanField(False)
@@ -53,3 +54,5 @@ class Cupon(models.Model):
     def __str__(self):
         return self.cliente
 
+class Usuarios(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)

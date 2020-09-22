@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Cliente, Planes, Contrato
-from .forms import ClienteForm, PlanesForm, ContratoForm
-from django.contrib.auth.decorators import login_required
+from .models import Cliente, Planes, Contrato, Cupon, Usuarios, User
+from .forms import ClienteForm, PlanesForm, ContratoForm, CuponesForm, CustomUserForm
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
@@ -22,7 +22,7 @@ def clientes(request):
 
     return render(request, 'core/clientes.html', data)
 
-@login_required
+@permission_required('core.add_cliente')
 def nuevo_cliente(request):
     data = {
         'form':ClienteForm
@@ -68,7 +68,7 @@ def contratos(request):
 
     return render(request, 'core/contratos.html', data)
 
-@login_required
+@permission_required('core.add_contrato')
 def nuevo_contrato(request):
     data = {
         'form':ContratoForm
@@ -106,6 +106,11 @@ def eliminar_contrato(request, id):
 
 @login_required
 def cupones(request):
+    cupones = cupones.objects.all()
+    data = {
+        'cupones':cupones
+    }
+
     return render(request, 'core/cupones.html')
 
 @login_required
@@ -120,7 +125,7 @@ def planes(request):
     }
     return render(request, 'core/planes.html', data)
 
-@login_required
+@permission_required('core.add_planes')
 def nuevo_planes(request):
     data = {
         'form':PlanesForm
@@ -157,6 +162,62 @@ def eliminar_planes(request, id):
 
     return redirect(to="planes")
 
+
+
+@permission_required('core.add_cupon')
+def nuevo_cupon(request):
+    data = {
+        'form':CuponesForm
+    }
+
+    if request.method == 'POST':
+        formulario = CuponesForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+        
+            data['mensaje'] = "Cupon generado con exito" 
+
+    return render(request, 'core/nuevo_cupon.html', data)
+
+@login_required
+def nuevo_usuario(request):
+    data = {
+        'form':CustomUserForm
+    }
+
+    if request.method == 'POST':
+        formulario = CustomUserForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data['mensaje'] = "Usuario generado con exito"
+            
+
+    return render(request, 'registration/nuevo_usuario.html', data)
+
+@login_required
+def modificar_usuario(request, id):
+    usuario = User.objects.get(id=id)
+    data = {
+        'form':CustomUserForm(instance=usuario)
+    }
+
+    if request.method == 'POST':
+        formulario = CustomUserForm(data=request.POST, instance=usuario)
+        if formulario.is_valid():
+            formulario.save()
+            data['mensaje'] = "Password actualizado correctamente"
+
+    return render(request, 'registration/modificar_usuario.html', data)
+
 @login_required
 def usuarios(request):
-    return render(request, 'core/usuarios.html')
+    
+    usuario = User.objects.all()
+    data = {
+        'usuarios':usuario
+    }
+
+
+    return render(request, 'registration/usuarios.html', data)
+
+
