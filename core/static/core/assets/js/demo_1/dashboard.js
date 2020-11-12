@@ -902,10 +902,10 @@
       var lineChart = new Chart(lineChartCanvas, {
         type: 'line',
         data: {
-          labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10", "Day 11", "Day 12", "Day 13"],
+          labels: [7,8,9],
           datasets: [{
             label: 'Profit',
-            data: [7, 6, 9, 7, 8, 6, 8, 5, 7, 8, 6, 7, 7],
+            data: [7,8,9],
             borderColor: '#6d7cfc',
             backgroundColor: gradientStrokeFill_1,
             borderWidth: 3,

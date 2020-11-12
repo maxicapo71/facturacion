@@ -7,7 +7,7 @@
     {% load static %}
     <!-- ESTILOS VIEJOS -->
     <!--<link rel="stylesheet" href="{% static 'core/css/estilos.css' %}" TYPE="text/css">-->
-    <title>Sistema de gestion version inicial 1.0</title>
+    <title>Sistema de gestion Xpcmax 1.0</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{% static 'core/assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/assets/vendors/iconfonts/ionicons/css/ionicons.css' %}">
@@ -33,27 +33,25 @@
       <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
           <a class="navbar-brand brand-logo" href="{% url 'home' %}">
-            <img src="{% static 'core/assets/images/logo.svg' %}" alt="logo" /> </a>
-          <a class="navbar-brand brand-logo-mini" href="{% url 'home' %}">
-            <img src="{% static 'core/assets/images/logo-mini.svg' %}" alt="logo" /> </a>
+            <img src="{% static 'core/assets/images/logo.jpg' %}" alt="logo" /> </a>
+          
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center">
           <ul class="navbar-nav">
-            <li class="nav-item font-weight-semibold d-none d-lg-block">Ayuda : +54 9 3546 478 234</li>
+            <li class="nav-item font-weight-semibold d-none d-lg-block">Ayuda: +54(3546) 478234</li>
 
           </ul>
 
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
-              <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                <img class="img-xs rounded-circle" src="{% static 'core/assets/images/faces/face8.jpg' %}" alt="Profile image"> </a>
+              <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">Usuario</a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
-                  <img class="img-md rounded-circle" src="{% static 'core/assets/images/faces/face8.jpg' %}" alt="Profile image">
+                  
                   <p class="mb-1 mt-3 font-weight-semibold"> {{user.username}} </p>
-                  <p class="font-weight-light text-muted mb-0">mxm.richi@gmail.com</p>
+                  <p class="font-weight-light text-muted mb-0">{{user.email}}</p>
                 </div>
-                <a class="dropdown-item">Mi Perfil <span class="badge badge-pill badge-danger"></span><i class="dropdown-item-icon ti-dashboard"></i></a>
+                <a class="dropdown-item" href="{% url 'usuarios' %}">Mi Perfil <span class="badge badge-pill badge-danger"></span><i class="dropdown-item-icon ti-dashboard"></i></a>
                 <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión<i class="dropdown-item-icon ti-power-off"></i></a>
               </div>
             </li>
@@ -69,14 +67,21 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item nav-profile">
-              <a href="#" class="nav-link">
+              <a href="{% url 'usuarios' %}" class="nav-link">
                 <div class="profile-image">
-                  <img class="img-xs rounded-circle" src="{% static 'core/assets/images/faces/face8.jpg' %}" alt="profile image">
+                  
                   <div class="dot-indicator bg-success"></div>
                 </div>
                 <div class="text-wrapper">
-                  <p class="profile-name">Usuario: {{user.username}} </p>
-                  <p class="designation">Administrador</p>
+                  
+                                   
+                  {% if '@' not in user.username %}
+                    <p class="profile-name">Usuario: {{user.username}} </p>
+                    <p class="designation">Acceso: Administrador</p>
+                  {% else %}
+                    <p class="profile-name">Usuario: {{user.first_name}} </p>
+                    <p class="designation">Acceso: Cliente</p>
+                  {% endif %}
                 </div>
               </a>
             </li>
@@ -101,10 +106,7 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'nuevo_cliente' %}">Nuevo Cliente</a>
                   </li>
-                <!--  <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                  </li>
-                -->
+              
                 </ul>
               </div>
             </li>

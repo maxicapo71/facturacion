@@ -2594,14 +2594,17 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(37, 44, 70, 0.5); }
 
 .btn-link {
-  font-weight: 400;
-  color: #007bff;
-  text-decoration: none; }
+  font-weight: 500;
+  color: #000000;
+  text-decoration: none;
+  text-align: left; }
   .btn-link:hover {
     color: #0056b3;
-    text-decoration: underline; }
+    text-decoration: underline;
+    text-align: left; }
   .btn-link:focus, .btn-link.focus {
     text-decoration: underline;
+    text-align: left;
     -webkit-box-shadow: none;
     box-shadow: none; }
   .btn-link:disabled, .btn-link.disabled {
@@ -8705,7 +8708,7 @@ address p {
   margin-bottom: 0.625rem; }
 
 .card-description {
-  margin-bottom: 0.9375rem;
+  margin-bottom: 0.525rem;
   font-family: "roboto", sans-serif; }
   .rtl .card-description {
     text-align: right; }

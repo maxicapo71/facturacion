@@ -6,45 +6,88 @@
 
 
 <h1 id="titulo">CUPONES</h1>
-<table class="table table-striped">
-    <thead>
+
+<form action="" method="POST">
+
+    <div class="content-wrapper">
+        <div class="row">    
+            
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+    
+                                <input type="search" class="form-control" placeholder="Buscar..." name="busqueda"><br><br>
+                                <button type="submit" class="btn btn-secondary btn-fw" name="buscar" value="buscar">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    {% csrf_token %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><button type="submit" class="btn btn-link btn-fw" name="cliente" value="cliente">Cliente</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="contrato" value="contrato">Contrato</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="monto" value="monto">Monto</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="detalle" value="detalle">Detalle</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="fecha_creacion" value="fecha_creacion">Fecha de Creación</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="pagado" value="pagado">PAGADO</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="fecha_pago" value="fecha_pago">Fecha de Pago</button></th>
+                <th><p class="card-description"> Opciones </p></th>
+                
+            </tr>
+        </thead>
+        
+        {% for p in page_obj %}
+        
         <tr>
-            <th>Cliente</th>
-            <th>Contrato</th>
-            <th>Monto</th>
-            <th>Detalle</th>
-            <th>Fecha de Creación</th>
-            <th>Estado</th>
-            <th>Fecha de Pago</th>
-            
+            <td>{{ p.cliente }}</td>
+            <td>{{ p.contrato.ip }}</td>
+            <td>{{ p.monto }}</td>
+            <td>{{ p.detalle }}</td>
+            <td>{{ p.fecha_creacion }}</td>
+            <td>{{ p.pagado }}</td>
+            <td>{{ p.fecha_pago }}</td>
+        
+            <td>
+                {% if not p.pagado %}
+                    <a href="{% url 'modificar_cupon' p.id %}" class="btn btn-success btn-fw">
+                        <i class="mdi mdi-file-document"></i>Pagar</a>
+                        <button type="button" onclick="confirmarEliminacionCupon({{p.id}})" class="btn btn-danger btn-fw">
+                            <i class="mdi mdi-alert-outline"></i>Eliminar</button>
+                {% endif %}
+            </td>
         </tr>
-    </thead>
-    
-    {% for p in cupones %}
-    
-    <tr>
-        <td>{{ p.cliente }}</td>
-        <td>{{ p.contrato }}</td>
-        <td>{{ p.monto }}</td>
-        <td>{{ p.detalle }}</td>
-        <td>{{ p.fecha_creacion }}</td>
-        <td>{{ p.pagado }}</td>
-        <td>{{ p.fecha_pago }}</td>
-    
-        <td>
-            <a href="{% url 'modificar_cupon' p.id %}" class="btn btn-dark btn-fw">
-                <i class="mdi mdi-cloud-download"></i>Editar</a>
-            <button type="button" onclick="confirmarEliminacion({{p.id}})" class="btn btn-danger btn-fw">
-                    <i class="mdi mdi-alert-outline"></i>Eliminar</button>
-            
-        </td>
-    </tr>
 
 
-    {% endfor %}
-    
+        {% endfor %}
+        
 
-</table>
+    </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</form>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{% static 'core/js/confirmacion.js' %}"></script>
 

@@ -11,7 +11,7 @@
         <div class="row page-title-header">
             <div class="col-12">
             <div class="page-header">
-                <h4 class="page-title">Dashboard</h4>
+                <h4 class="page-title">Estado General</h4>
                 <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                 <ul class="quick-links">
                     <li><a href="#">ICE Market data</a></li>
@@ -46,14 +46,7 @@
                 </div>
                 <div class="sort-wrapper">
                 <button type="button" class="btn btn-primary toolbar-item">New</button>
-                <div class="dropdown ml-lg-auto ml-3 toolbar-item">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownexport" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownexport">
-                    <a class="dropdown-item" href="#">Export as PDF</a>
-                    <a class="dropdown-item" href="#">Export as DOCX</a>
-                    <a class="dropdown-item" href="#">Export as CDR</a>
-                    </div>
-                </div>
+                
                 </div>
             </div>
             </div>
@@ -74,6 +67,36 @@
                         <div class="wrapper my-auto ml-auto ml-lg-4">
                         <canvas height="50" width="100" id="stats-line-graph-1"></canvas>
                         </div>
+
+                        <div id="container" style="width: 75%;">
+                            <canvas id="pie-chart"></canvas>
+                          </div>
+                        
+                          <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                          <script>
+                        
+                            var config = {
+                              type: 'pie',
+                              data: {
+                                datasets: [{
+                                  data: {{ cupones|safe }},
+                                  backgroundColor: ['#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'],
+                                  label: 'Population'
+                                }],
+                                labels: {{ cupones|safe }}
+                              },
+                              options: {
+                                responsive: true
+                              }
+                            };
+                        
+                            window.onload = function() {
+                              var ctx = document.getElementById('pie-chart').getContext('2d');
+                              window.myPie = new Chart(ctx, config);
+                            };
+                        
+                          </script>
+
                     </div>
                     </div>
                     <div class="col-lg-3 col-md-6 mt-md-0 mt-4">

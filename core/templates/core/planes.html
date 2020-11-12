@@ -9,37 +9,41 @@
 
 <h1 id="titulo">PLANES</h1>
 
-<table class="table table-striped">
-    <thead>
+<form action="" method="POST">
+    {% csrf_token %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><button type="submit" class="btn btn-link btn-fw" name="nombre" value="nombre">Nombre</button></th>
+                    <th><button type="submit" class="btn btn-link btn-fw" name="vel_subida" value="vel_subida">Velocidad de subida Kb</button></th>
+                    <th><button type="submit" class="btn btn-link btn-fw" name="vel_bajada" value="vel_bajada">Velocidad de bajada Kb	</button></th>
+                    <th><button type="submit" class="btn btn-link btn-fw" name="precio" value="precio">Precio</button></th>
+                    <th><button type="submit" class="btn btn-link btn-fw" name="detalle" value="detalle">Detalle</button></th>
+                    <th><p class="card-description"> Opciones </p></th>
+            </tr>
+        </thead>
+        {% for p in planes %}
+
         <tr>
-            <th>Nombre</th>
-            <th>Velocidad de subida Kb</th>
-            <th>Velocidad de bajada Kb</th>
-            <th>Precio</th>
-            <th>Detalle</th>
-            <th>Opciones</th>
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.vel_subida }}</td>
+            <td>{{ p.vel_bajada }}</td>
+            <td>{{ p.precio }}</td>
+            <td>{{ p.detalle }}</td>
+            <td>
+                <a href="{% url 'modificar_planes' p.id %}" class="btn btn-dark btn-fw">
+                    <i class="mdi mdi-cloud-download"></i>Editar</a>
+                <button type="button" onclick="confirmarEliminacionPlanes({{p.id}})" class="btn btn-danger btn-fw">
+                        <i class="mdi mdi-alert-outline"></i>Eliminar</button>
+                
+            </td>
         </tr>
-    </thead>
-    {% for p in planes %}
 
-    <tr>
-        <td>{{ p.nombre }}</td>
-        <td>{{ p.vel_subida }}</td>
-        <td>{{ p.vel_bajada }}</td>
-        <td>{{ p.precio }}</td>
-        <td>{{ p.detalle }}</td>
-        <td>
-            <a href="{% url 'modificar_planes' p.id %}" class="btn btn-dark btn-fw">
-                <i class="mdi mdi-cloud-download"></i>Editar</a>
-            <button type="button" onclick="confirmarEliminacion({{p.id}})" class="btn btn-danger btn-fw">
-                    <i class="mdi mdi-alert-outline"></i>Eliminar</button>
-            
-        </td>
-    </tr>
+        {% endfor %}
 
-    {% endfor %}
+    </table>
 
-</table>
+</form>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{% static 'core/js/confirmacion.js' %}"></script>

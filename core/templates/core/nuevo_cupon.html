@@ -16,26 +16,85 @@
                         <form class="forms-sample" action="" method="POST">
                         {% csrf_token %}
                         <div class="form-group row">
-                            <label for="cliente">{{ form.cliente.label }}</label>
-                            {{ form.cliente }}
-                           
+                            <div class="form-group">
+                                <label for="cliente">Seleccione un cliente:</label>
+                                
+                                <div class="form-group">
+                                    <select name="cliente_select" onchange="this.form.submit()">
+                                        
+                                        {% if cliente_id != 0 %}
+
+                                        <option value="0">----------</option>
+
+                                        {% else %}
+
+                                        <option value="0">----------</option>
+                                        
+                                        {% endif %}
+                                        {% for cliente in clientes %}
+                                        {% if cliente.id == cliente_id %}
+                                        <option selected value= "{{cliente.id}}">{{cliente.nombre}}</option>
+                                        {% else %}
+                                        <option value= "{{cliente.id}}">{{cliente.nombre}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group row">
-                            <label for="plan">{{ form.contrato.label }}</label>
-                            {{ form.contrato }}
+                            <div class="form-group">
+                                <label for="contrato">Seleccione un contrato:</label>
+                                <div class="form-group">
+                                    <select name="contrato_select" onchange="this.form.submit()">
+                                        
+                                        {% if contrato_id != 0 %}
+                                            
+                                            <option value="0">----------</option> 
+                                            
+
+                                        {% else %}
+
+                                            <option value="0">----------</option> 
+                                        
+                                        {% endif %}
+
+
+                                        {% for contrato in contratos %}
+                                            {% if contrato.id == contrato_id %}
+                                                <option selected value= "{{contrato.id}}">{{contrato.ip}}</option>
+                                            {% else %}
+                                                <option value= "{{contrato.id}}">{{contrato.ip}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group row">
-                            <label for="monto">{{ form.monto.label }}</label>
-                            {{ form.monto }}
+                            <div class="form-group">
+                                <label for="monto">Monto del Cupon:</label>
+                                <div class="form-group">
+                                    <input name="monto" value= "{{contrato_monto}}" required/>
+                                </div>
+                            </div>    
                         </div>
                         <div class="form-group row">
-                            <label for="detalle">{{ form.detalle.label }}</label>
-                            {{ form.detalle }}
+                            <div class="form-group">
+                                <label for="detalle">Detalle:</label>
+                                
+                                <div class="form-group">
+                                    <textarea name="detalle" rows="5" required >{{contrato_detalle}}</textarea>
+                                </div>
+                            </div>
                         </div>
                         <br>
-                        <button type="reset" class="btn btn-light btn-fw">
-                            <i class="mdi mdi-refresh"></i>Limpiar</button>
-                        <button type="submit" class="btn btn-success btn-fw">
+                        <a href="{% url 'nuevo_cupon' %}">
+                        <button type="button" class="btn btn-light btn-fw">
+                            <i class="mdi mdi-refresh"></i>Limpiar</button></a>
+                        <button type="submit" class="btn btn-success btn-fw" name="botonenvio" value="presionado">
                             <i class="mdi mdi-check"></i>Guardar</button>
                         </form>
                     </div>

@@ -4,7 +4,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home, clientes, contratos, cupones, nuevo_cupon, historial, planes, usuarios, nuevo_cliente, modificar_cliente, eliminar_cliente, nuevo_planes, modificar_planes, eliminar_planes, nuevo_contrato, modificar_contrato, eliminar_contrato, nuevo_usuario, modificar_usuario
+from .views import home, clientes, contratos, cupones, nuevo_cupon, historial, planes, usuarios, nuevo_cliente, modificar_cliente, eliminar_cliente, nuevo_planes, modificar_planes, eliminar_planes, nuevo_contrato, modificar_contrato, eliminar_contrato, nuevo_usuario, modificar_usuario, modificar_cupon, eliminar_cupon
 
 urlpatterns = [
     path('', home, name="home"),
@@ -26,4 +26,6 @@ urlpatterns = [
     path('eliminar_contrato/<id>/', eliminar_contrato, name="eliminar_contrato"),
     path('nuevo_usuario/', nuevo_usuario, name="nuevo_usuario"),
     path('modificar_usuario/<id>/', modificar_usuario, name="modificar_usuario"),
+    path('modificar_cupon/<id>/', modificar_cupon, name="modificar_cupon"),
+    path('eliminar_cupon/<id>/', eliminar_cupon, name="eliminar_cupon")
 ]

@@ -2,50 +2,108 @@
 
 {% load static %}
 
+
+
 {% block contenido %}
 
 
+
 <h1 id="titulo">CLIENTES</h1>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Telefono</th>
-            <th>Dni</th>
-            <th>Direccion</th>
-            <th>Ciudad</th>
-            <th>Codigo Postal</th>
-            <th>Provincia</th>
-            <th>Opciones</th>
-        </tr>
-    </thead>
-    
-    {% for p in clientes %}
-    
-    <tr>
-        <td>{{ p.nombre }}</td>
-        <td>{{ p.email }}</td>
-        <td>{{ p.telefono }}</td>
-        <td>{{ p.dni }}</td>
-        <td>{{ p.direccion }}</td>
-        <td>{{ p.ciudad }}</td>
-        <td>{{ p.codigo_postal }}</td>
-        <td>{{ p.provincia }}</td>
-        <td>
-            <a href="{% url 'modificar_cliente' p.id %}" class="btn btn-dark btn-fw">
-                <i class="mdi mdi-cloud-download"></i>Editar</a>
-            <button type="button" onclick="confirmarEliminacion({{p.id}})" class="btn btn-danger btn-fw">
-                    <i class="mdi mdi-alert-outline"></i>Eliminar</button>
+
+
+   
+
+
+
+<form action="" method="POST">
+
+    <div class="content-wrapper">
+        <div class="row">    
             
-        </td>
-    </tr>
+                <div class="row flex-grow">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+    
+                                <input type="search" class="form-control" placeholder="Buscar..." name="busqueda"><br><br>
+                                <button type="submit" class="btn btn-secondary btn-fw" name="buscar" value="buscar">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
 
 
-    {% endfor %}
+    {% csrf_token %}
+
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><button type="submit" class="btn btn-link btn-fw" name="nombre" value="nombre">Nombre</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="email" value="email">Email</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="telefono" value="telefono">Telefono</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="dni" value="dni">DNI</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="direccion" value="direccion">Direccion</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="ciudad" value="ciudad">Ciudad</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="cp" value="cp">Codigo Postal</button></th>
+                <th><button type="submit" class="btn btn-link btn-fw" name="provincia" value="provincia">Provincia</button></th>
+                <th><p class="card-description"> Opciones </p></th>
+            </tr>
+        </thead>
+        
+        {% for p in page_obj %}
+            <tr>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.email }}</td>
+                <td>{{ p.telefono }}</td>
+                <td>{{ p.dni }}</td>
+                <td>{{ p.direccion }}</td>
+                <td>{{ p.ciudad }}</td>
+                <td>{{ p.codigo_postal }}</td>
+                <td>{{ p.provincia }}</td>
+                <td>
+                    <a href="{% url 'modificar_cliente' p.id %}" class="btn btn-dark btn-fw">
+                        <i class="mdi mdi-cloud-download"></i>Editar</a>
+                    <button type="button" onclick="confirmarEliminacionCliente({{p.id}})" class="btn btn-danger btn-fw">
+                            <i class="mdi mdi-alert-outline"></i>Eliminar</button>
+                    
+                </td>
+            </tr>
+        
+        
+
+        {% endfor %}
+        
+
+    </table>
+
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+</form>   
+        
     
 
-</table>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{% static 'core/js/confirmacion.js' %}"></script>
 
