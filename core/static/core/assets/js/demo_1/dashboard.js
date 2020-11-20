@@ -902,10 +902,10 @@
       var lineChart = new Chart(lineChartCanvas, {
         type: 'line',
         data: {
-          labels: [7,8,9],
+          labels: [3, 6, 8, 1, 5, 1, 3],
           datasets: [{
-            label: 'Profit',
-            data: [7,8,9],
+            label: 'Valor',
+            data: [3, 6, 8, 1, 5, 1, 3],
             borderColor: '#6d7cfc',
             backgroundColor: gradientStrokeFill_1,
             borderWidth: 3,

@@ -4,6 +4,7 @@
 
 {% block contenido %}
 <div class="content-wrapper">
+    <div class="generic-form">
     <div class="row">       
         <div class="row flex-grow">
             <div class="col-12">
@@ -58,9 +59,18 @@
                 </div>
             </div>    
         </div>            
-    </div>                 
+    </div> 
+    </div>                
 </div>
 
-{{ mensaje }}
+{% if guardo %}
+    
+    <script>
+        
+        alert( "guardado correcto" );
+        location.href="/clientes"
+    </script>
+{% endif %}
 
+{{ mensaje }}
 {% endblock %}

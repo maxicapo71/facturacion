@@ -7,18 +7,21 @@
 {% block contenido %}
 
 
-<h1 id="titulo">PLANES</h1>
-
-<form action="" method="POST">
+<div class="generic-form">
+<form class="" action="" method="POST">
+    <div class="content-wrapper">
+    <h1 id="titulo">PLANES</h1>
+    </div>
     {% csrf_token %}
+    
     <table class="table table-striped">
         <thead>
             <tr>
                 <th><button type="submit" class="btn btn-link btn-fw" name="nombre" value="nombre">Nombre</button></th>
                     <th><button type="submit" class="btn btn-link btn-fw" name="vel_subida" value="vel_subida">Velocidad de subida Kb</button></th>
-                    <th><button type="submit" class="btn btn-link btn-fw" name="vel_bajada" value="vel_bajada">Velocidad de bajada Kb	</button></th>
-                    <th><button type="submit" class="btn btn-link btn-fw" name="precio" value="precio">Precio</button></th>
-                    <th><button type="submit" class="btn btn-link btn-fw" name="detalle" value="detalle">Detalle</button></th>
+                    <th><button type="submit" class="btn btn-link btn-fw" name="vel_bajada" value="vel_bajada">Velocidad de bajada Kb</button></th>
+                    <th><button type="submit" class="btn btn-link btn-fw" name="precio" value="precio">Precio   </button></th>
+                    <th><button type="submit" class="btn btn-link btn-fw" name="detalle" value="detalle">Detalle   </button></th>
                     <th><p class="card-description"> Opciones </p></th>
             </tr>
         </thead>
@@ -44,6 +47,7 @@
     </table>
 
 </form>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{% static 'core/js/confirmacion.js' %}"></script>

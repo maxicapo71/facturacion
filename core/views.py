@@ -10,6 +10,11 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models.functions import Lower
+from django.db.models import Count, Sum, Avg
+import json
+from django.core import serializers
+from datetime import datetime, date, time, timedelta
+from django.contrib import messages
 # Create your views here.
 
 
@@ -17,13 +22,86 @@ from django.db.models.functions import Lower
 
 @login_required
 def home(request):
+    plan = []
+    plan_nombre = []
 
-    cupones = [2, 4, 5, 7]
+   
+    contratos = Contrato.objects.values('plan__nombre').annotate(dcount=Count('plan'))
+    cant_cont = Contrato.objects.all().count()
+    cant_cli = Cliente.objects.all().count()
+    
+    ahora = date.today()
+    dias = 360
+    if request.POST.get('1Y'):
+        dias = 360
+    if request.POST.get('6M'):
+        dias = 180
+    if request.POST.get('1M'):
+        dias = 31
+    if request.POST.get('7D'):
+        dias = 7
+
+   
+    sin_pagar = Cupon.objects.filter(fecha_creacion__range = (ahora - timedelta(days=dias), ahora ), pagado = False)
+    hace7dias = Cupon.objects.filter(fecha_pago__range = (ahora - timedelta(days=dias), ahora ))
+    D7 = list(hace7dias.values('fecha_pago').annotate(Monto = Sum('monto')))
+    no_pago = sin_pagar.aggregate(Sum('monto'))
+    D7_pagos = hace7dias.aggregate(Count('monto'))
+    D7_monto = hace7dias.aggregate(Sum('monto'))
+    
+
+
+    print(no_pago)
+    D7_fecha = []
+    D7_mon = []
+    aux = 0
+    for i in D7:
+        D7_fecha.append(str(D7[aux]['fecha_pago']))
+        D7_mon.append(D7[aux]['Monto'])
+        aux = aux + 1
+    
+    
+
+    
+    hace1mes_count = Contrato.objects.filter(fecha_creacion__lte = (ahora - timedelta(days=31))).count()
+    hace3sem_count = Contrato.objects.filter(fecha_creacion__lte = (ahora - timedelta(days=23))).count()
+    hace2sem_count = Contrato.objects.filter(fecha_creacion__lte = (ahora - timedelta(days=16))).count()
+    hace1sem_count = Contrato.objects.filter(fecha_creacion__lte = (ahora - timedelta(days=8))).count()
+    ahora_count = Contrato.objects.all().count()
+    
+    
+    
+    
+    
+    fechas = [str((ahora - timedelta(days=30))),str((ahora - timedelta(days=23))),str((ahora - timedelta(days=16))),str((ahora - timedelta(days=8))),str(ahora)]
+    evo_count = [hace1mes_count, hace3sem_count, hace2sem_count, hace1sem_count, ahora_count]
+    
+
+    
+
+    for p in contratos:
+       
+        plan_nombre.append(p['plan__nombre'])
+        plan.append(p['dcount'])
+  
     
     data = {
-        'cupones':cupones,
         
+        'D7_monto':D7_monto['monto__sum'],
+        'no_pago':no_pago['monto__sum'],
+        'D7_pagos':D7_pagos['monto__count'],
+        'D7_fecha':D7_fecha,
+        'D7_mon':D7_mon,
+       
+        'cant_cont':cant_cont,
+        'cant_cli':cant_cli,
+        'plan':plan,
+        'plan_nombre':plan_nombre,
+        'fechas':fechas,
+        'evo_count':evo_count
         
+
+       
     }
     return render(request, 'core/home.html', data)
 
@@ -111,13 +189,16 @@ def modificar_cliente(request, id):
     data = {
         'form':ClienteForm(instance=cliente)
     }
-    
+    guardo = False
     if request.method == 'POST':
+        
         formulario = ClienteForm(data=request.POST, instance=cliente)
         if formulario.is_valid():
             formulario.save()
+            guardo = True
+            data['guardo'] = guardo
             data['mensaje'] = "Cliente actualizado correctamente"
-            return redirect(to="clientes")
+            
         else:
             data['mensaje'] = formulario.errors
 
@@ -195,13 +276,15 @@ def modificar_contrato(request, id):
     data = {
         'form':ContratoForm(instance=contrato)
     }
-
+    guardo = False
     if request.method == 'POST':
         formulario = ContratoForm(data=request.POST, instance=contrato)
         if formulario.is_valid():
             formulario.save()
+            guardo = True
+            data['guardo'] = guardo
             data['mensaje'] = "Contrato actualizado correctamente"
-            return redirect(to="contratos")
+            
         else:
             data['mensaje'] = formulario.errors
 
@@ -319,13 +402,15 @@ def modificar_planes(request, id):
     data = {
         'form':PlanesForm(instance=planes)
     }
-
+    guardo = False
     if request.method == 'POST':
         formulario = PlanesForm(data=request.POST, instance=planes)
         if formulario.is_valid():
             formulario.save()
+            guardo = True
             data['mensaje'] = "Plan actualizado correctamente"
-            return redirect(to="planes")
+            data['guardo'] = guardo
+          
         else:
             data['mensaje'] = formulario.errors
 
@@ -405,7 +490,7 @@ def modificar_cupon(request, id):
 
     if request.method == 'POST':
         formulario = CuponesForm(data=request.POST, instance=cupon)
-    
+        guardo = False
         if formulario.is_valid():
             instance = formulario.save(commit=False)
             instance.fecha_pago = datetime.today()
@@ -418,7 +503,11 @@ def modificar_cupon(request, id):
                 [ cupon.cliente.email ],
                 fail_silently=False,
             )
+            guardo = True
+            data['guardo'] = guardo
             data['mensaje'] = "Cupon actualizado correctamente"
+            
+            
         else:
             
             data['mensaje'] = formulario.errors

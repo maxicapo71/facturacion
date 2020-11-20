@@ -8,32 +8,30 @@
 
 
 
-<h1 id="titulo">CLIENTES</h1>
 
+
+
+<form class="" action="" method="POST">
 
    
-
-
-
-<form action="" method="POST">
-
-    <div class="content-wrapper">
-        <div class="row">    
-            
-                <div class="row flex-grow">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-    
-                                <input type="search" class="form-control" placeholder="Buscar..." name="busqueda"><br><br>
-                                <button type="submit" class="btn btn-secondary btn-fw" name="buscar" value="buscar">Buscar</button>
+        <div class="content-wrapper">
+            <h1 id="titulo">CLIENTES</h1>
+            <div class="row">    
+                
+                    <div class="row flex-grow">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+        
+                                    <input type="search" class="form-control" placeholder="Buscar..." name="busqueda"><br><br>
+                                    <button type="submit" class="btn btn-secondary btn-fw" name="buscar" value="buscar">Buscar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-        </div>
-    </div>
-
+            </div>
+        
+        </div> 
 
     {% csrf_token %}
 
@@ -98,13 +96,16 @@
             {% endif %}
         </span>
     </div>
-
+ 
 </form>   
         
-    
+
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{% static 'core/js/confirmacion.js' %}"></script>
+
 
 {% endblock %}

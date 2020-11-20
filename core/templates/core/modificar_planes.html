@@ -6,6 +6,7 @@
 
 
 <div class="content-wrapper">
+    <div class="generic-form">
     <div class="row">       
         <div class="row flex-grow">
             <div class="col-12">
@@ -48,8 +49,17 @@
             </div>    
         </div>            
     </div>     
-            
+    </div>       
 </div>
+
+{% if guardo %}
+    
+    <script>
+        
+        alert( "guardado correcto" );
+        location.href="/planes"
+    </script>
+{% endif %}
 
 {{ mensaje }}
 

@@ -47,6 +47,16 @@
             
 </div>
 
+
+{% if guardo %}
+    
+    <script>
+        
+        alert( "guardado correcto" );
+        location.href="/contratos"
+    </script>
+{% endif %}
+
 {{ mensaje }}
 
 {% endblock %}
